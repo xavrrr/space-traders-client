@@ -26,15 +26,13 @@ class LoginWidget extends Component {
         this.setState({token: event.target.value});
     }
 
-    async signIn() {
+    async signIn(event) {
+        event.preventDefault();
+
         spaceTraders.init(this.state.username, this.state.token);
 
-        console.log(spaceTraders.getStatus());
-        console.log(await spaceTraders.getStatus());
         spaceTraders.getStatus().then((result) => {
-            console.log(result);
-
-            if (result === "spacetraders is currently online and available to play") {
+            if (result.status === "spacetraders is currently online and available to play") {
                 spaceTraders.getAccount().then((response) => {
                     if (response.user.username === this.state.username) {
                         console.log("Success");
